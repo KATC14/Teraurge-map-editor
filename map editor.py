@@ -25,7 +25,7 @@ class map_editor():
 		# offset for x and y used in various places to position blips correctly and correct x, y gotten from canvas
 		self.pos_number = (1600, 2400)
 		self.map_image  = "maps/noih full map.jpg"
-		self.map_txt    = "maps/map_locations.txt"# around 2000 blips on screen at onces it starts getting framey
+		self.map_txt    = "maps/default_data.txt"# around 2000 blips on screen at onces it starts getting framey
 		self.config     = "config.json"
 
 		self.delete_confirmation = self.toplevel_open = False
@@ -58,6 +58,7 @@ class map_editor():
 		self.make_map()
 		self.make_other()
 		self.draw_locations()
+		print('amount of blips', len(self.item_data))
 
 		self.selected_blip_menu  = 1
 		self.new_blip_menu       = 2
@@ -123,6 +124,7 @@ class map_editor():
 		if not data:
 			data             = self.json_load(self.config)
 			self.custom_menu = data['custom_menu']
+			self.custom_color_picker = data['custom_color_picker']
 		if where == 'controls':
 			self.controls = data
 			controls = data['controls']
@@ -290,8 +292,11 @@ class map_editor():
 			item = self.canvas.itemcget(event, 'tag').split()[-1]
 			fill = self.canvas.itemcget(event, 'fill')
 
-		color = color_picker.askcolor(self.root, title='Pick a color', color=fill)
-		#color = tkinter.colorchooser.askcolor(title='Pick a color', color=fill)[1]
+		if self.custom_color_picker:
+			color = color_picker.askcolor(self.root, title='Pick a color', color=fill)
+		else:
+			color = tkinter.colorchooser.askcolor(title='Pick a color', color=fill)[1]
+
 		# saves to memory and config file
 		self.blip_colors['colors'][event]['color'] = color
 		self.json_save(self.config, {'colors': self.blip_colors['colors'], 'controls': self.controls['controls']})
@@ -448,7 +453,7 @@ class map_editor():
 	def draw_locations(self):
 		try:
 			# tries to load map_txt if there is one
-			map_file = self.loadfile(self.map_txt)
+			map_file = self.loadfile(self.map_txt).replace('][', '\n')
 
 			for i in map_file.split():
 				x, y, r, item_type, name = i.replace('[', '').replace(']', '').split('|')# utilities.dict_replace(i, {'[':'', ']':''}).split('|')
@@ -473,19 +478,28 @@ class map_editor():
 		except:
 			print('no map text file')
 
-	def toggle_menus(self, menu):
+	def toggle_menus(self, where, menu):
 		if   menu == 'custom':
-			self.custom_menu = True
+			if where == 'menu':
+				self.custom_menu = True
+			elif where == 'color_picker':
+				self.custom_color_picker = True
 		elif menu == 'native':
-			self.custom_menu = False
-		self.json_save(self.config, {"custom_menu": self.custom_menu, 'colors': self.blip_colors['colors'], 'controls': self.controls['controls']})
+			if where == 'menu':
+				self.custom_menu = False
+			elif where == 'color_picker':
+				self.custom_color_picker = False
+
+		self.json_save(self.config, {"custom_menu": self.custom_menu, "custom_color_picker": self.custom_color_picker, 'colors': self.blip_colors['colors'], 'controls': self.controls['controls']})
+
 	def make_menu(self):
 		if self.custom_menu:
 			# custom menu recreation
 			self.menubar = menu.MainMenu(self.root)
 
 			option_menu = menu.MainMenu(self.menubar)
-			option_menu.add_command(label="toggle to native menu (needs restart)", command=lambda: self.toggle_menus('native'))
+			option_menu.add_command(label="toggle to native menu (needs restart)", command=lambda: self.toggle_menus('menu', 'native'))
+			option_menu.add_command(label="toggle to native color picker", command=lambda: self.toggle_menus('color_picker', 'native'))
 			option_menu.add_command(label="controls", command=self.change_controls)
 
 			colors = menu.MainMenu(option_menu)
@@ -524,7 +538,8 @@ class map_editor():
 			self.menubar = tkinter.Menu(self.root, tearoff=0)
 
 			option_menu = tkinter.Menu(self.menubar, tearoff=0)
-			option_menu.add_command(label="toggle to custom menu (needs restart)", command=lambda: self.toggle_menus('custom'))
+			option_menu.add_command(label="toggle to custom menu (needs restart)", command=lambda: self.toggle_menus('menu', 'custom'))
+			option_menu.add_command(label="toggle to custom color picker", command=lambda: self.toggle_menus('color_picker', 'custom'))
 			option_menu.add_command(label="controls", command=self.change_controls)
 
 			colors = tkinter.Menu(option_menu, tearoff=0)
