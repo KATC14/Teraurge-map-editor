@@ -175,10 +175,11 @@ class map_editor():
 			self.toplevel_open = True
 			top = self.make_toplevel()
 
-			Label(top, text=f"{self.convert_keys(self.map_move_key)} drag to move map\n").grid(sticky='nw', column=0, row=0)
-			Label(top, text=f"{self.convert_keys(self.move_key)} drag to move blips\n").grid(sticky='nw', column=0, row=1)
-			Label(top, text=f"{self.convert_keys(self.edit_key)} on blips for options\n").grid(sticky='nw', column=0, row=2)
-			Label(top, text="you change the value of 'type, x, y, and radius'\nby using the scrollwheel").grid(sticky='nw', column=0, row=3)
+			Label(top, text="custom menu and custom color picker are experimental use at your own risk\n").grid(sticky='nw', column=0, row=0)
+			Label(top, text=f"{self.convert_keys(self.map_move_key)} drag to move map.").grid(sticky='nw', column=0, row=1)
+			Label(top, text=f"{self.convert_keys(self.move_key)} drag to move blips.").grid(sticky='nw', column=0, row=2)
+			Label(top, text=f"{self.convert_keys(self.edit_key)} on blips for options.").grid(sticky='nw', column=0, row=3)
+			Label(top, text="you change the value of 'type, x, y, and radius' by using the scrollwheel").grid(sticky='nw', column=0, row=4)
 
 	def loadfile(self, filename):
 		with open(filename, "r") as file:
