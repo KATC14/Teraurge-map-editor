@@ -1,5 +1,6 @@
 {
     "custom_menu": false,
+    "custom_color_picker": false,
     "colors": {
         "selected_blip": {
             "color": "#FF5500"
