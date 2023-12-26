@@ -223,7 +223,7 @@ class map_editor():
 		return ((x, y, r), item_type, name)
 
 	def motion(self, event=None):
-		# keeps the hover from detecting the map image as a blip\
+		# keeps the hover from detecting the map image as a blip
 		#name = raw = None
 		current = self.canvas.gettags("current")
 		if current and current[0] != 'current':
@@ -290,8 +290,9 @@ class map_editor():
 			item  = event.widget.cget('text').replace(' ', '_')
 			fill = event.widget.master.color_old
 		else:
-			item = self.canvas.itemcget(event, 'tag').split()[-1]
-			fill = self.canvas.itemcget(event, 'fill')
+			item = self.canvas.itemcget(event, 'tag')
+			if item: item = item.split()[-1]
+			fill = self.blip_colors['colors'][event]['color']
 
 		if self.custom_color_picker:
 			color = color_picker.askcolor(self.root, title='Pick a color', color=fill)
@@ -299,19 +300,20 @@ class map_editor():
 			color = tkinter.colorchooser.askcolor(title='Pick a color', color=fill)[1]
 
 		# saves to memory and config file
-		self.blip_colors['colors'][event]['color'] = color
-		self.json_save(self.config, {'colors': self.blip_colors['colors'], 'controls': self.controls['controls']})
+		if color:
+			self.blip_colors['colors'][event]['color'] = color
+			self.json_save(self.config, {"custom_menu": self.custom_menu, "custom_color_picker": self.custom_color_picker, 'colors': self.blip_colors['colors'], 'controls': self.controls['controls']})
 
-		# changes menu background color
-		if self.custom_menu:
-			event.widget.config(background=color)
-		else:
-			self.menubar.winfo_children()[-1].winfo_children()[0].entryconfigure(menu_item, background=color)
+			# changes menu background color
+			if self.custom_menu:
+				event.widget.config(background=color)
+			else:
+				self.menubar.winfo_children()[-1].winfo_children()[0].entryconfigure(menu_item, background=color)
 
-		self.canvas.itemconfig(item, fill=color)
-		# keeps the 'new_blip' from being grouped into 'blip' because thay have the same type
-		self.canvas.itemconfig(self.item_var.get(), fill=self.selected_blip_color)
-		self.canvas.itemconfig('new_blip', fill=self.new_blip_color)
+			self.canvas.itemconfig(item, fill=color)
+			# keeps the 'new_blip' from being grouped into 'blip' because thay have the same type
+			self.canvas.itemconfig(self.item_var.get(), fill=self.selected_blip_color)
+			self.canvas.itemconfig('new_blip', fill=self.new_blip_color)
 
 	def blip_outlines(self, event=None):
 		if self.custom_menu:
@@ -418,6 +420,7 @@ class map_editor():
 			button.config(text='delete', activebackground='#f0f0f0', bg='#f0f0f0')
 			self.canvas.delete(item)
 			del self.item_data[item]
+
 		self.delete_confirmation = True
 
 	def edit_blip(self, event, fake=False):
@@ -621,7 +624,7 @@ class map_editor():
 					self.canvas.tag_bind(i, self.motion_key, self.item_move, True)
 
 		# saves to config file
-		self.json_save(self.config, {'colors': self.blip_colors['colors'], 'controls': self.controls['controls']})
+		self.json_save(self.config, {"custom_menu": self.custom_menu, "custom_color_picker": self.custom_color_picker, 'colors': self.blip_colors['colors'], 'controls': self.controls['controls']})
 
 	def default_controls(self):
 		# unbind all sequences
@@ -648,7 +651,7 @@ class map_editor():
 		for func, key in a.items():
 			self.controls['controls'][func]['key'] = key
 		self.load_config('controls', self.controls)
-		self.json_save(self.config, {'colors': self.blip_colors['colors'], 'controls': self.controls['controls']})
+		self.json_save(self.config, {"custom_menu": self.custom_menu, "custom_color_picker": self.custom_color_picker, 'colors': self.blip_colors['colors'], 'controls': self.controls['controls']})
 
 	def change_controls(self, event=None):
 		# how to rebind?
@@ -691,7 +694,7 @@ class map_editor():
 				self.menubar.winfo_children()[-1].winfo_children()[0].entryconfigure(data['menu'], background=color)
 
 		self.load_config('colors', self.blip_colors)
-		self.json_save(self.config, {'colors': self.blip_colors['colors'], 'controls': self.controls['controls']})
+		self.json_save(self.config, {"custom_menu": self.custom_menu, "custom_color_picker": self.custom_color_picker, 'colors': self.blip_colors['colors'], 'controls': self.controls['controls']})
 
 	def make_other(self):
 		vcmd  = (self.root.register(lambda *args: self.edit_name(args)), '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
