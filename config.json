@@ -1,0 +1,43 @@
+{
+    "custom_menu": false,
+    "colors": {
+        "selected_blip": {
+            "color": "#FF5500"
+        },
+        "new_blip": {
+            "color": "#0f0"
+        },
+        "blip_place": {
+            "color": "#f00"
+        },
+        "blip_named": {
+            "color": "#f0f"
+        },
+        "blip": {
+            "color": "#ff0"
+        },
+        "blip_encounter": {
+            "color": "#0ff"
+        },
+        "blip_special": {
+            "color": "#00f"
+        }
+    },
+    "controls": {
+        "map_move": {
+            "key": "<Button-1>"
+        },
+        "map_move_to": {
+            "key": "<B1-Motion>"
+        },
+        "move": {
+            "key": "<Button-3>"
+        },
+        "move_to": {
+            "key": "<B3-Motion>"
+        },
+        "select": {
+            "key": "<Button-1>"
+        }
+    }
+}
