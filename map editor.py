@@ -14,7 +14,6 @@ from custom import color_picker, menu
 
 class map_editor():
 	def __init__(self):
-		super().__init__()
 		self.root = tkinter.Tk()
 		self.root.geometry("1280x720")
 		self.root.title("test")
