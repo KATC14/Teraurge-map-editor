@@ -11,7 +11,7 @@ built in [python](https://www.python.org/) 3.12.1 tkinter
 python [pillow](https://pypi.org/project/Pillow/)
 
 ## notes
-### custom menu and custom color picker are experimental use at your own risk
+### custom color picker is experimental use at your own risk
 the dots are called blips
 
 about 2000 blips on screen at once and it starts to get framey
