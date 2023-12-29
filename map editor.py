@@ -458,10 +458,12 @@ class map_editor():
 				if i in self.item_data:
 					self.canvas.delete(i)
 					del self.item_data[i]
+			self.canvas.delete(self.it_rectangle)
 
 		self.delete_confirmation = True
 
 	def ctrl_select(self, event):
+		self.delete_confirmation = False
 		state  = event.state
 		item   = self.canvas.find_closest(self.canvas.canvasx(event.x), self.canvas.canvasy(event.y))[-1]
 		if self.it_rectangle:
