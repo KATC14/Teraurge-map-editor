@@ -1,0 +1,70 @@
+
+some keys are incompatible when placed on certain controls
+overlapping commands is not recommended
+some controls need a second key eg "map_move" - "<Button-1>" needs "<B1-Motion>" with it, keep this in mind if you edit the controls
+
+    command             | keys
+mouse click
+
+    <Button-1>          | left
+    <Button-2>          | mouse wheel
+    <Button-3>          | right
+
+    shift
+    <Shift-Button-1>    | left
+    <Shift-Button-2>    | middle wheel
+    <Shift-Button-3>    | right
+
+    control
+    <Control-Button-1>  | left
+    <Control-Button-2>  | middle wheel
+    <Control-Button-3>  | right
+
+    alt
+    <Alt-Button-1>      | left
+    <Alt-Button-2>      | middle wheel
+    <Alt-Button-3>      | right
+
+
+motion
+    <B1-Motion>         | left
+    <B2-Motion>         | middle wheel
+    <B3-Motion>         | right
+
+    shift
+    <Shift-B1-Motion>   | left
+    <Shift-B2-Motion>   | middle wheel
+    <Shift-B3-Motion>   | right
+
+    control
+    <Control-B1-Motion> | left
+    <Control-B2-Motion> | middle wheel
+    <Control-B3-Motion> | right
+
+    alt
+    <Alt-B1-Motion>     | left
+    <Alt-B2-Motion>     | middle wheel
+    <Alt-B3-Motion>     | right
+
+
+defaults controls
+"controls": {
+    "map_move": {
+        "key": "<Button-1>",
+        "key_1": "<B1-Motion>"
+    },
+    "blip_move": {
+        "key": "<Button-3>",
+        "key_1": "<B3-Motion>"
+    },
+    "select": {
+        "key": "<Button-1>"
+    },
+    "shift_select": {
+        "key": "<Shift-Button-3>",
+        "key_1": "<Shift-B3-Motion>"
+    },
+    "control_select": {
+        "key": "<Control-Button-1>"
+    }
+}
