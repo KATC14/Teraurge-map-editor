@@ -16,7 +16,7 @@ the dots are called blips
 
 about 2000 blips on screen at once and it starts to get framey
 
-to many on screen at once and python throw a error or just freeze
+to many on screen at once and python might throw a error or just freeze
 
 I've have had up to 20600 and it makes the program barely usable
 
