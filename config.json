@@ -1,5 +1,4 @@
 {
-    "custom_menu": false,
     "custom_color_picker": false,
     "colors": {
         "selected_blip": {
@@ -26,19 +25,22 @@
     },
     "controls": {
         "map_move": {
-            "key": "<Button-1>"
+            "key": "<Button-1>",
+            "key_1": "<B1-Motion>"
         },
-        "map_move_to": {
-            "key": "<B1-Motion>"
-        },
-        "move": {
-            "key": "<Button-3>"
-        },
-        "move_to": {
-            "key": "<B3-Motion>"
+        "blip_move": {
+            "key": "<Button-3>",
+            "key_1": "<B3-Motion>"
         },
         "select": {
             "key": "<Button-1>"
+        },
+        "shift_select": {
+            "key": "<Shift-Button-3>",
+            "key_1": "<Shift-B3-Motion>"
+        },
+        "control_select": {
+            "key": "<Control-Button-1>"
         }
     }
 }
