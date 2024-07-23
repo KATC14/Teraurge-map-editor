@@ -6,6 +6,8 @@ works with Teraurge version 2.13
 
 built in [python](https://www.python.org/) 3.12.1 tkinter
 
+[exe version](https://mega.nz/file/Ae53iLCA#OUnq7cug4kxV3YkPGa5u_ECdDzbLl59Gb_79XLv4Ajk) built with [pyinstaller](https://pyinstaller.org/en/stable/)
+
 ## dependencies
 
 python [pillow](https://pypi.org/project/Pillow/)
