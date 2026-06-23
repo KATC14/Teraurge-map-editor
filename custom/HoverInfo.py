@@ -1,17 +1,25 @@
 import tkinter
+from typing import Unpack, TypedDict
+
+class tkinter_label(TypedDict, total=False):
+	bg:str
+	fg:str
+	cursor:str
+	relief:str
+	borderwidth:int
+	textvariable:tkinter.StringVar
 
 class Tooltip:#eveh=hover enter event, evex=hover exit event, evem=hover motion event
-	def __init__(self, parent, text='text', bg='gray94', fg='black', cursor='arrow', relief='groove', borderwidth=2, textvar=False, move_with_cursor=False, eveh=False, evex=False, evem=False):
+	def __init__(self, parent, text='text', move_with_cursor=False, eveh=False, evex=False, evem=False, **kwargs: Unpack[tkinter_label]):
 		self.parent = parent
-		self.text = text
-		self.bg = bg
-		self.fg = fg
-		self.cursor = cursor
-		self.relief = relief# flat, groove, raised, ridge, solid, or sunken
-		self.borderwidth = borderwidth
-		self.strVar = textvar
-		if self.strVar is True:
-			self.strVar = tkinter.StringVar()
+		self.text   = text
+		self.kwargs = kwargs
+		self.kwargs['bg']           = kwargs.get("bg", 'gray94')
+		self.kwargs['fg']           = kwargs.get('fg', 'black')
+		self.kwargs['cursor']       = kwargs.get('cursor', 'arrow')
+		self.kwargs['relief']       = kwargs.get('relief', 'groove')# flat, groove, raised, ridge, solid, or sunken
+		self.kwargs['borderwidth']  = kwargs.get('borderwidth', 2)
+
 		self.parent.bind("<Enter>", lambda event: self.Hover(event) if not eveh else eveh(event))
 		self.parent.bind("<Leave>", lambda event: self.Hover(event) if not evex else evex(event))
 		if move_with_cursor:
@@ -23,11 +31,8 @@ class Tooltip:#eveh=hover enter event, evex=hover exit event, evem=hover motion 
 			self.Hovertoplevel = tkinter.Toplevel(self.parent)
 			self.Hovertoplevel.overrideredirect(True)
 			self.Hovertoplevel.geometry(f"+{event.x_root}+{event.y_root+20}")
-			self.parent.config(cursor=self.cursor)
-			if self.strVar:
-				tkinter.Label(self.Hovertoplevel, text=self.text, bg=self.bg, fg=self.fg, relief=self.relief, borderwidth=self.borderwidth, textvariable=self.strVar).grid(column=0, row=0)
-			else:
-				tkinter.Label(self.Hovertoplevel, text=self.text, bg=self.bg, fg=self.fg, relief=self.relief, borderwidth=self.borderwidth).grid(column=0, row=0)
+			self.parent.config(cursor=self.kwargs.get('cursor'))
+			tkinter.Label(self.Hovertoplevel, text=self.text, **self.kwargs, ).grid(column=0, row=0)
 		if evetype == 8:
 			self.Hovertoplevel.destroy()
 
@@ -39,6 +44,8 @@ if __name__ == "__main__":
 	lbl = tkinter.Label(root, text='hover over me!')
 	lbl.grid(column=0, row=0)
 	msg = "cool right?\n at least I think so!"
+	textvar = tkinter.StringVar()
+	textvar.set('aaaaaaaaaaa')
 	Tooltip(lbl, text=msg, bg='green', fg='purple', cursor="hand2", relief='sunken', borderwidth=10, move_with_cursor=True)
 	#methods
 	#test.text = "new words though \"text\""
